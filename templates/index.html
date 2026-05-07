@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Registro de Mascotas</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      form { max-width: 400px; margin-bottom: 1.5rem; }
+      label { display:block; margin-top:0.5rem; }
+      input[type="text"], input[type="number"] { width:100%; padding:0.5rem; }
+      table { border-collapse: collapse; width:100%; margin-top:1rem; }
+      th, td { border:1px solid #ddd; padding:8px; text-align:left; }
+      th { background:#f4f4f4; }
+    </style>
+  </head>
+  <body>
+    <h1>Registrar mascota</h1>
+    <form action="/add" method="post">
+      <label>Nombre de la mascota
+        <input type="text" name="name" required />
+      </label>
+      <label>Peso (kg)
+        <input type="number" step="0.01" name="weight" required />
+      </label>
+      <label>Edad (años)
+        <input type="number" name="age" required />
+      </label>
+      <label>Nombre del dueño
+        <input type="text" name="owner_name" required />
+      </label>
+      <button type="submit">Guardar</button>
+    </form>
+
+    <h2>Listado de mascotas</h2>
+    {% if pets %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Peso (kg)</th>
+          <th>Edad</th>
+          <th>Dueño</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in pets %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ "%.2f"|format(p.weight) }}</td>
+          <td>{{ p.age }}</td>
+          <td>{{ p.owner_name }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No hay mascotas registradas.</p>
+    {% endif %}
+  </body>
+</html>
